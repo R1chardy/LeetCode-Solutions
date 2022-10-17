@@ -2,7 +2,7 @@ class Solution {
 public:
     int numRollsToTarget(int n, int k, int target) {
         int mod = 1e9+7;
-        long dp[31][2001] = {0};
+        int dp[31][2001] = {0};
         for(int i = 0; i < k; i++){
             dp[0][i] = 1;
         }
