@@ -3,9 +3,6 @@ public:
     int appRem[51][51] = {0};
     int dp[51][51][11] = {0};
     int ways(vector<string>& pizza, int k) {
-        int pre = 0;
-        int tot = 0;
-        
         for(int i = 0; i < 51; i++){
             for(int j = 0; j < 51; j++){
                 for(int k = 0; k < 11; k++){
@@ -37,6 +34,7 @@ public:
     }
     
     int dfs(vector<string>& pizza, int k, int i = 0, int j = 0){
+        
         // cout << i << " " << j << " " << k << endl;
         if(k > appRem[i][j]){
             // cout << "impossible" << endl;
@@ -47,6 +45,7 @@ public:
             return 1;
         }
         else if(k == 1){
+            // cout << "impossible" << endl;
             return 0;
         }
         else if(dp[i][j][k] != -1){
@@ -70,7 +69,7 @@ public:
                     sum += dfs(pizza, k-1, i, x)%mod;
                 }
             }
-
+            
             return dp[i][j][k] = sum%mod;
         }
     }
