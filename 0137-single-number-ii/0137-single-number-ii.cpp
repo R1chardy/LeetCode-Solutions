@@ -20,9 +20,3 @@ public:
         return result;
     }
 };
-/*
-10
-10
-11
-10
-*/
