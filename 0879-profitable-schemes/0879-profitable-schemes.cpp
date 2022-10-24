@@ -8,7 +8,6 @@ public:
     
     int helper(int n, int minProfit, vector<int>& group, vector<int>& profit, int idx, int maxP){
         int mod = 1e9+7;
-        // cout << n << " " << idx << endl;
         if(idx >= group.size()){
             if(n >= 0){
                 return maxP >= minProfit;
@@ -26,7 +25,6 @@ public:
         }
         res += helper(n, minProfit, group, profit, idx+1, maxP)%mod;
         res %= mod;
-        
         return dp[n][idx][maxP] = res;
     }
 };
