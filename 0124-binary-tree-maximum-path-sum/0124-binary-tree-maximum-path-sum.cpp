@@ -12,6 +12,7 @@
 class Solution {
 public:
     int maxV = INT_MIN;
+    unordered_map<TreeNode*, int> dp;
     int maxPathSum(TreeNode* root) {
         finder(root);
         return maxV;
@@ -35,6 +36,9 @@ public:
         else if(root->left == nullptr && root->right == nullptr){
             return root->val;
         }
+        else if(dp.count(root) != 0){
+            return dp[root];
+        }
         else if(root->left == nullptr){
             L = -1001;
             R = helper(root->right);
@@ -50,6 +54,6 @@ public:
         
         maxV = max(maxV, L + R + root->val);
         
-        return max(max(L + root->val, R + root->val), root->val);
+        return dp[root] = max(max(L + root->val, R + root->val), root->val);
     }
 };
