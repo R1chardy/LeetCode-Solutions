@@ -1,36 +1,50 @@
 class Solution {
 public:
-    int dp[101][101][202];
+    bool dp[101][101][102];
     bool hasValidPath(vector<vector<char>>& grid) {
-        memset(dp, -1, sizeof(dp));
-        return solve(grid, 0, 0, 0);
-    }
-    
-    bool solve(vector<vector<char>>& grid, int i, int j, int sum){
-        int val = sum + ((grid[i][j] == '(')? 1 : -1);
-        if(val < 0){
-            return false;
-        }
-        else if(i == grid.size()-1 && j == grid[0].size()-1){
-            if(val == 0){
-                return true;
+        memset(dp, false, sizeof(dp));
+        int count = 0;
+        for(int i = 0; i < grid.size(); i++){
+            if(count >= 0){
+                count += (grid[i][0] == '('? 1 : -1);
             }
-            else{
-                return false;
+            if(count >= 0){
+                dp[i][0][count] = true;
             }
         }
-        else if(dp[i][j][val] != -1){
-            return dp[i][j][val];
-        }
-        else{
-            bool ret = false;
-            if(i+1 < grid.size()){
-                ret = ret || solve(grid, i+1, j, val);
+        count = 0;
+        for(int i = 0; i < grid[0].size(); i++){
+            if(count >= 0){
+                count += (grid[0][i] == '('? 1 : -1);
             }
-            if(j+1 < grid[0].size()){
-                ret = ret || solve(grid, i, j+1, val);
+            if(count >= 0){
+                dp[0][i][count] = true;
             }
-            return dp[i][j][val] = ret;
         }
+        for(int i = 1; i < grid.size(); i++){
+            for(int j = 1; j < grid[0].size(); j++){
+                if(grid[i][j] == '('){
+                    for(int k = 0; k < 101; k++){
+                        if(dp[i-1][j][k]){
+                            dp[i][j][k+1] = true;
+                        }
+                        if(dp[i][j-1][k]){
+                            dp[i][j][k+1] = true;
+                        }
+                    }
+                }
+                else{
+                    for(int k = 1; k <= 101; k++){
+                        if(dp[i-1][j][k]){
+                            dp[i][j][k-1] = true;
+                        }
+                        if(dp[i][j-1][k]){
+                            dp[i][j][k-1] = true;
+                        }
+                    }
+                }
+            }
+        }
+        return dp[grid.size()-1][grid[0].size()-1][0];
     }
 };
