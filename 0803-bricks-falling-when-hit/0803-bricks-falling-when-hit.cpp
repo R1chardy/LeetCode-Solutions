@@ -52,10 +52,6 @@ public:
     int componentSize(int p){
         assert(p >= 0 && p < num);
         return sz[find(p)];
-    }   
-    
-    bool connected(int p, int q){
-        return find(p) == find(q);
     }
 };
 
@@ -73,11 +69,6 @@ public:
                 ds.unify(i+1, 0);
             }
         }
-        // for(int i = 0; i < grid[0].size()-1; i++){
-        //     if(grid[0][i] == 1 && grid[0][i+1] == 1){
-        //         ds.unify(i+1, i+2);
-        //     }
-        // }
         for(int i = 0; i < grid.size(); i++){
             for(int j = 0; j < grid[0].size(); j++){
                 if(grid[i][j] == 1){
@@ -100,7 +91,6 @@ public:
             }
         }
         return res;
-        
     }
     
     void unifyFour(UnionFind& ds, vector<vector<int>>& grid, int i, int j){
