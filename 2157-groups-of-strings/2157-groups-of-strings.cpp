@@ -57,6 +57,14 @@ public:
     int components() const{
         return numComp;
     }
+    
+    int largest(){
+        int large = 0;
+        for(int i = 0; i < num; i++){
+            large = std::max(large, sz[find(i)]);
+        }
+        return large;
+    }
 };
 
 class Solution {
@@ -90,10 +98,6 @@ public:
                 }
             }
         }
-        int sizeN = 0;
-        for(int i = 0; i < words.size(); i++){
-            sizeN = max(sizeN, ds.componentSize(i));
-        }
-        return {ds.components(), sizeN};
+        return {ds.components(), ds.largest()};
     }
 };
