@@ -68,7 +68,7 @@ public:
         return ds.components();
     }
     
-    bool isSimilar(string a, string b){
+    bool isSimilar(string& a, string& b){
         if(a == b){
             return true;
         }
