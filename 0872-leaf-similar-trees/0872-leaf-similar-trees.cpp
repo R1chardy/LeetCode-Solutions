@@ -23,10 +23,10 @@ public:
         if(root == nullptr){
             return;
         }
-        getLeaf(root->left, t1);
-        getLeaf(root->right, t1);
-        if(root->left == nullptr && root->right == nullptr){
+        else if(root->left == nullptr && root->right == nullptr){
             t1.push_back(root->val);
         }
+        getLeaf(root->left, t1);
+        getLeaf(root->right, t1);
     }
 };
