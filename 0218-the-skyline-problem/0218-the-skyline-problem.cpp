@@ -9,7 +9,7 @@ public:
             edges.push_back({x[1], -x[2]});
         }
         
-        sort(edges.begin(), edges.end(), [=](auto x, auto y){
+        sort(edges.begin(), edges.end(), [](auto x, auto y){
             return x.first == y.first? x.second > y.second : x.first < y.first;
         });
         
