@@ -2,7 +2,8 @@ class Solution {
 public:
     int maximalSquare(vector<vector<char>>& matrix) {
         int maxL = 0;
-        vector<vector<int>> dp(matrix.size(), vector<int>(matrix[0].size(), 0));
+        int dp[matrix.size()][matrix[0].size()];
+        memset(dp, 0, sizeof(dp));
         for(int i = 0; i < matrix.size(); i++){
             dp[i][matrix[0].size()-1] = matrix[i][matrix[0].size()-1] - '0';
             maxL = max(maxL, dp[i][matrix[0].size()-1]);
