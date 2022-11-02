@@ -2,16 +2,9 @@ class Solution {
 public:
     int orderOfLargestPlusSign(int n, vector<vector<int>>& mines) {
         int grid[n][n];
-        int up[n][n];
-        int down[n][n];
-        int left[n][n];
-        int right[n][n];
+        int dp[n][n];
         memset(grid, 1, sizeof(grid));
-        memset(up, 0, sizeof(up));
-        memset(down, 0, sizeof(down));
-        memset(left, 0, sizeof(left));
-        memset(right, 0, sizeof(right));
-        
+        fill_n(&dp[0][0], n*n, INT_MAX);
         for(auto x : mines){
             grid[x[0]][x[1]] = 0;
         }
@@ -25,7 +18,7 @@ public:
                 else{
                     pre = 0;
                 }
-                left[i][j] = pre;
+                dp[i][j] = min(dp[i][j], pre);
             }
             pre2 = 0;
             for(int j = n-1; j >= 0; j--){
@@ -35,7 +28,7 @@ public:
                 else{
                     pre2 = 0;
                 }
-                right[i][j] = pre2;
+                dp[i][j] = min(dp[i][j], pre2);
             }
         }
         for(int j = 0; j < n; j++){
@@ -47,7 +40,7 @@ public:
                 else{
                     pre = 0;
                 }
-                up[i][j] = pre;
+                dp[i][j] = min(dp[i][j], pre);
             }
             pre2 = 0;
             for(int i = n-1; i >= 0; i--){
@@ -57,13 +50,13 @@ public:
                 else{
                     pre2 = 0;
                 }
-                down[i][j] = pre2;
+                dp[i][j] = min(dp[i][j], pre2);
             }
         }
         int maxL = 0;
         for(int i = 0; i < n; i++){
             for(int j = 0; j < n; j++){
-                maxL = max(maxL, min(min(left[i][j], right[i][j]), min(up[i][j], down[i][j])));
+                maxL = max(maxL, dp[i][j]);
             }
         }
         return maxL;
