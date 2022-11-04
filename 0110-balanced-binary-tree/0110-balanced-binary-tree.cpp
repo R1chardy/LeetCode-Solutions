@@ -12,31 +12,27 @@
 class Solution {
 public:
     bool isBalanced(TreeNode* root) {
-        return dfs(root).first;
+        if(root == nullptr){
+            return true;
+        }
+        int left = getHeight(root->left);
+        int right = getHeight(root->right);
+        if(left >= 5001 || right >= 5001 || abs(left - right) > 1){
+            return false;
+        }
+        return true;
     }
     
-    pair<bool, int> dfs(TreeNode* root){
-        if(root == nullptr || root->left == nullptr && root->right == nullptr){
-            return {true, 1};
+    int getHeight(TreeNode* root){
+        if(root == nullptr){
+            return 0;
         }
+        int left = getHeight(root->left);
+        int right = getHeight(root->right);
         
-        bool valid = true;
-        int left = 0;
-        int right = 0;
-        pair<bool, int> temp;
-        if(root->left != nullptr){
-            temp = dfs(root->left);
-            left = temp.second;
-            valid = valid && temp.first;
+        if(abs(left - right) > 1){
+            return 5001;
         }
-        if(root->right != nullptr){
-            temp = dfs(root->right);
-            right = temp.second;
-            valid = valid && temp.first;
-        }
-        if(abs(right - left) > 1){
-            valid = false;
-        }
-        return {valid, 1 + max(left, right)};
+        return 1 + max(left, right);
     }
 };
