@@ -1,32 +1,22 @@
 class Solution {
 public:
     bool isValid(string s) {
-        stack<int> brackets;
-        char endBracket;
+        stack<char> st;
         for(int i = 0; i < s.length(); i++){
-            if(s[i] == '(' || s[i] == '[' || s[i] == '{'){
-                brackets.push(s[i]);
+            if(s[i] == '(' || s[i] == '{' || s[i] == '['){
+                st.push(s[i]);
             }
             else{
-                endBracket = brackets.empty()? 'x' : brackets.top();
-                brackets.pop();
-                if(endBracket == 'x'){
+                if(st.empty()){
                     return false;
                 }
-                else if(s[i] == ')' && endBracket != '('){
-                    return false;
-                }
-                else if(s[i] == ']' && endBracket != '['){
-                    return false;
-                }
-                else if(s[i] == '}' && endBracket != '{'){
+                char top = st.top();
+                st.pop();
+                if(s[i] == '}' && top != '{' || s[i] == ']' && top != '[' || s[i] == ')' && top != '('){
                     return false;
                 }
             }
         }
-        if(!brackets.empty()){
-            return false;
-        }
-        return true;
+        return st.empty()? true : false;
     }
 };
