@@ -9,7 +9,7 @@
 class Solution {
 public:
     bool hasCycle(ListNode *head) {
-        set<ListNode*> visited;
+        unordered_set<ListNode*> visited;
         while(head != nullptr){
             if(visited.count(head)){
                 return true;
