@@ -14,18 +14,18 @@ public:
         if(head == nullptr){
             return head;
         }
-        stack<ListNode*> nodes;
+        stack<ListNode*> s;
         while(head != nullptr){
-            nodes.push(head);
+            s.push(head);
             head = head->next;
         }
-        head = nodes.top();
-        ListNode* temp = nodes.top();
-        nodes.pop();
-        while(!nodes.empty()){
-            temp->next = nodes.top();
+        head = s.top();
+        ListNode* temp = head;
+        s.pop();
+        while(!s.empty()){
+            temp->next = s.top();
             temp = temp->next;
-            nodes.pop();
+            s.pop();
         }
         temp->next = nullptr;
         return head;
