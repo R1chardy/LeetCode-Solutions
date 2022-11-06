@@ -14,7 +14,7 @@ public:
     int maxL = INT_MIN;
     int diameterOfBinaryTree(TreeNode* root) {
         int ans = solve(root);
-        return max(maxL, ans) - 1;
+        return max(maxL, ans)-1;
     }
     
     int solve(TreeNode* root){
