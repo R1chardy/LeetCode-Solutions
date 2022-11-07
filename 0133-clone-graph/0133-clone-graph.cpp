@@ -21,21 +21,28 @@ public:
 
 class Solution {
 public:
-    unordered_map<int, Node*> visited;
+    unordered_map<Node*, Node*> corr;
+    unordered_set<Node*> visited;
     Node* cloneGraph(Node* node) {
         if(node == nullptr){
-            return nullptr;
+            return node;
         }
-        Node* gCopy = new Node(node->val);
-        visited[node->val] = gCopy;
-        for(int i = 0; i < node->neighbors.size(); i++){
-            if(visited.count(node->neighbors[i]->val)){
-                gCopy->neighbors.push_back(visited[node->neighbors[i]->val]);
+        return traverse(node);
+    }
+    
+    Node* traverse(Node* node){
+        visited.emplace(node);
+        Node* dCopy = new Node(node->val);
+        corr[node] = dCopy;
+        for(auto x : node->neighbors){
+            if(visited.count(x) == 0){
+                visited.emplace(x);
+                dCopy->neighbors.push_back(traverse(x));
             }
             else{
-                gCopy->neighbors.push_back(cloneGraph(node->neighbors[i]));
+                dCopy->neighbors.push_back(corr[x]);
             }
         }
-        return gCopy;
+        return dCopy;
     }
 };
