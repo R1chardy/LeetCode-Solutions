@@ -27,17 +27,13 @@ public:
         if(node == nullptr){
             return node;
         }
-        return traverse(node);
-    }
-    
-    Node* traverse(Node* node){
         visited.emplace(node);
         Node* dCopy = new Node(node->val);
         corr[node] = dCopy;
         for(auto x : node->neighbors){
             if(visited.count(x) == 0){
                 visited.emplace(x);
-                dCopy->neighbors.push_back(traverse(x));
+                dCopy->neighbors.push_back(cloneGraph(x));
             }
             else{
                 dCopy->neighbors.push_back(corr[x]);
