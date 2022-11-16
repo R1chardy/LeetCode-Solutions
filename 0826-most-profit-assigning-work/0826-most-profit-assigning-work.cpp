@@ -24,12 +24,7 @@ public:
             }
             else if(it != difficulty.begin()){
                 it--;
-                maxL = xd[*it];
-                // while(it != difficulty.begin()){
-                //     it--;
-                //     maxL = max(maxL, xd[*it]);
-                // }
-                sum += maxL;
+                sum += xd[*it];
             }
         }
         return  sum;
