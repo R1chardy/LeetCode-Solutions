@@ -5,10 +5,12 @@ public:
         for(auto x : nums){
             mp[x]++;
         }
+        int temp;
         for(auto x : mp){
-            while(mp[x.first] > 0){
+            if(mp[x.first] > 0){
+                temp = mp[x.first];
                 for(int i = x.first; i < x.first+k; i++){
-                    mp[i]--;
+                    mp[i] -= temp;
                     if(mp[i] < 0){
                         return false;
                     }
