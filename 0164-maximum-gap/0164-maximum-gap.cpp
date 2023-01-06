@@ -1,27 +1,25 @@
 class Solution {
 public:
     int maximumGap(vector<int>& nums) {
-        if (nums.size() < 2)
-    {
-        return 0;
-    }
-
-    // Sort the array in ascending order
-    std::vector<int> sorted_nums = nums;
-    std::sort(sorted_nums.begin(), sorted_nums.end());
-
-    // Initialize the maximum difference variable to the difference between the first two elements
-    int max_diff = sorted_nums[1] - sorted_nums[0];
-
-    // Iterate through the array, starting at the second element
-    for (int i = 1; i < sorted_nums.size(); i++)
-    {
-        // Calculate the difference between the current element and the previous element
-        int diff = sorted_nums[i] - sorted_nums[i-1];
-        // Update the maximum difference if necessary
-        max_diff = std::max(max_diff, diff);
-    }
-
-    return max_diff;
+        queue<int> buckets[10];
+        long exp = 1;
+        for(int i = 0; i < 10; i++){
+            for(auto x : nums){
+                buckets[x/exp%10].push(x);
+            }
+            exp *= 10;
+            nums.clear();
+            for(int j = 0; j < 10; j++){
+                while(!buckets[j].empty()){
+                    nums.push_back(buckets[j].front());
+                    buckets[j].pop();
+                }
+            }
+        }
+        int diff = 0;
+        for(int i = 1; i < nums.size(); i++){
+            diff = max(diff, nums[i] - nums[i-1]);
+        }
+        return diff;
     }
 };
