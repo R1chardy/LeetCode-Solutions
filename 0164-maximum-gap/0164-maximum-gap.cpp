@@ -3,7 +3,12 @@ public:
     int maximumGap(vector<int>& nums) {
         queue<int> buckets[10];
         long exp = 1;
-        for(int i = 0; i < 10; i++){
+        int maxN = *max_element(nums.begin(), nums.end()), len = 0;
+        while(maxN){
+            len++;
+            maxN /= 10;
+        }
+        for(int i = 0; i < len; i++){
             for(auto x : nums){
                 buckets[x/exp%10].push(x);
             }
