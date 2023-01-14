@@ -1,17 +1,16 @@
 class Solution {
 public:
-    int dp[20] = {0};
+    int dp[20];
     int numTrees(int n) {
-        if(n <= 1){
-            return 1;
+        dp[0] = 1;
+        dp[1] = 1;
+        for(int i = 2; i <= n; i++){
+            int ans = 0;
+            for(int j = 0; j < i; j++){
+                ans += dp[j] * dp[i-j-1];
+            }
+            dp[i] = ans;
         }
-        else if(dp[n] != 0){
-            return dp[n];
-        }
-        int ans = 0;
-        for(int i = 0; i < n; i++){
-            ans += numTrees(i) * numTrees(n-i-1);
-        }
-        return dp[n] = ans;
+        return dp[n];
     }
 };
