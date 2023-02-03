@@ -1,49 +1,32 @@
 class Solution {
 public:
-int ladderLength(string beginWord, string endWord, vector<string>& wordList) {
-    // Create a set for efficient lookup of words in wordList
-    unordered_set<string> dict(wordList.begin(), wordList.end());
-
-    // If endWord is not in the dictionary, there is no transformation sequence
-    if (!dict.count(endWord)) {
-        return 0;
-    }
-
-    // Use a queue to perform breadth-first search
-    queue<string> q{{beginWord}};
-    int steps = 0;
-    while (!q.empty()) {
-        // Increase the number of steps taken
-        ++steps;
-
-        // Process all words in the current layer of the search tree
-        for (int size = q.size(); size > 0; --size) {
-            string word = q.front();
+    int ladderLength(string beginWord, string endWord, vector<string>& wordList) {
+        queue<string> q;
+        unordered_set<string> possible(wordList.begin(), wordList.end());
+        q.push(beginWord);
+        int depth = 0, width = 1;
+        while(!q.empty()){
+            string s1 = q.front();
             q.pop();
-
-            // Check if the current word is the endWord
-            if (word == endWord) {
-                return steps;
+            width--;
+            if(s1 == endWord){
+                return depth+1;
             }
-
-            // Generate all possible transformations of the current word
-            for (int i = 0; i < word.size(); ++i) {
-                for (char ch = 'a'; ch <= 'z'; ++ch) {
-                    if (ch == word[i]) continue;
-                    string newWord = word;
-                    newWord[i] = ch;
-                    if (dict.count(newWord)) {
-                        // Add the transformed word to the queue
-                        q.emplace(newWord);
-                        // Remove the transformed word from the dictionary to avoid visiting it again
-                        dict.erase(newWord);
+            for(int i = 0; i < s1.length(); i++){
+                string word = s1;
+                for(char c = 'a'; c <= 'z'; c++){
+                    word[i] = c;
+                    if(possible.count(word)){
+                        q.push(word);
+                        possible.erase(word);
                     }
                 }
             }
+            if(width <= 0){
+                width = q.size();
+                depth++;
+            }
         }
+        return 0;
     }
-    return 0;
-}
-
-
 };
