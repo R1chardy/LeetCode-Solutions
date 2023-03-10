@@ -6,8 +6,8 @@ public:
                 return x[0] == y[0]? x[1] > y[1] : x[0] < y[0];
             });
         vector<int> dp;
-        for(int i = 0; i < envelopes.size(); i++){
-            int height = envelopes[i][1];
+        for(auto& env : envelopes){
+            int height = env[1];
             int les = lower_bound(dp.begin(), dp.end(), height)-dp.begin();
             if(les == dp.size()){
                 dp.push_back(height);
