@@ -8,13 +8,14 @@ public:
         vector<int> dp;
         int len = 0;
         for(int i = 0; i < envelopes.size(); i++){
-            int les = lower_bound(dp.begin(), dp.begin()+len, envelopes[i][1], greater<int>())-dp.begin();
+            int height = envelopes[i][1];
+            int les = lower_bound(dp.begin(), dp.begin()+len, height, greater<int>())-dp.begin();
             if(les == len){
-                dp.push_back(envelopes[i][1]);
+                dp.push_back(height);
                 len++;
             }
             else{
-                dp[les] = envelopes[i][1];
+                dp[les] = height;
             }
         }
         return dp.size();
