@@ -68,7 +68,6 @@ public:
             return a[2] < b[2];
         });
         UnionFind ds(n);
-        
         int i = 0;
         for(auto& query : queries){
             while(i < edgeList.size() && edgeList[i][2] < query[2]){
