@@ -1,32 +1,20 @@
 class Solution {
 public:
-    int coinChange(vector<int>& coins, int amount) {
-        map<int,int> mp;
-        return solve(mp, coins, amount);
-    }
-    
-    int solve(map<int,int>& mp, vector<int>& coins, int amount){
-        if(amount < 0){
-            return -1;
+    int coinChange(vector<int>& coins, int amount){
+        vector<long> dp(amount+1, INT_MAX);
+        dp[0] = 0;
+        for(auto& coin : coins){
+            if(coin < amount+1){
+                dp[coin] = 1;
+            }
         }
-        else if(amount == 0){
-            return 0;
-        }
-        else if(count(coins.begin(), coins.end(), amount)){
-            return 1;
-        }
-        else if(mp[amount] != 0){
-            return mp[amount];
-        }
-        else{
-            int minV = INT_MAX;
+        for(int i = 0; i < amount+1; i++){
             for(auto& coin : coins){
-                int ans = solve(mp, coins, amount-coin);
-                if(ans != -1){
-                    minV = min(minV, 1 + ans);
+                if(i-coin > 0){
+                    dp[i] = min(dp[i], 1+dp[i-coin]);
                 }
             }
-            return mp[amount] = minV == INT_MAX? -1 : minV;
         }
+        return dp[amount] == INT_MAX? -1 : dp[amount];
     }
 };
