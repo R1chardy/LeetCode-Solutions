@@ -1,43 +1,32 @@
 class Solution {
 public:
     int coinChange(vector<int>& coins, int amount) {
-        
-    if(amount == 0){
-        return 0;
+        map<int,int> mp;
+        return solve(mp, coins, amount);
     }
-
-    std::unordered_map<int, int> coins_map{};
-    int possible[coins.size()];
-    int possibleI = 0;
-    int currSmallest = 0;
-    int val;
-
-    for(int i = 0; i < coins.size(); i++){
-        if(coins[i] > 10000){
-            continue;
+    
+    int solve(map<int,int>& mp, vector<int>& coins, int amount){
+        if(amount < 0){
+            return -1;
         }
-        coins_map.insert({coins[i], 1});
-    }
-    for(int i = 1; i <= amount; i++){
-        for(int j = 0; j < coins.size(); j++){
-            if(i - coins[j] >= 0 && (coins_map.find(i-coins[j]) != coins_map.end())){
-                possible[possibleI] = coins_map[i-coins[j]];
-                possibleI++;
+        else if(amount == 0){
+            return 0;
+        }
+        else if(count(coins.begin(), coins.end(), amount)){
+            return 1;
+        }
+        else if(mp[amount] != 0){
+            return mp[amount];
+        }
+        else{
+            int minV = INT_MAX;
+            for(auto& coin : coins){
+                int ans = solve(mp, coins, amount-coin);
+                if(ans != -1){
+                    minV = min(minV, 1 + ans);
+                }
             }
+            return mp[amount] = minV == INT_MAX? -1 : minV;
         }
-        if(possibleI == 0){
-            continue;
-        }
-        currSmallest = possible[0];
-        for(int k = 0; k < possibleI; k++){
-            if (possible[k] < currSmallest){
-                currSmallest = possible[k];
-            }
-        }
-        coins_map.insert({i, currSmallest + 1});
-        possibleI = 0;
-    }
-    (coins_map.find(amount) == coins_map.end())? val = -1: val = coins_map.at(amount);
-    return val;
     }
 };
