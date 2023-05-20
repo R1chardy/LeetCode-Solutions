@@ -18,17 +18,12 @@ public:
         while(!q.empty()){
             int top = q.front();
             q.pop();
-            if(visited.count(top)){
-                continue;
-            }
             ret.push_back(top);
             visited.insert(top);
             for(auto& node : mp[top]){
                 indegs[node]--;
-            }
-            for(int i = 0; i < numCourses; i++){
-                if(indegs[i] == 0 && visited.count(i) == 0){
-                    q.push(i);
+                if(indegs[node] == 0){
+                    q.push(node);
                 }
             }
             
