@@ -1,20 +1,20 @@
 class Solution {
 public:
     vector<vector<int>> threeSum(vector<int>& nums) {
-        sort(nums.begin(), nums.end());
         vector<vector<int>> ans;
+        sort(nums.begin(), nums.end());
+        unordered_map<int,int> val2idx;
+        for(int i = 0; i < nums.size(); i++){
+            val2idx[nums[i]] = i;
+        }
         for(int i = 0; i < nums.size()-2; i++){
-            if(i != 0 && nums[i] == nums[i-1]){
-                continue;
-            }
             for(int j = i+1; j < nums.size()-1; j++){
-                if(j != i+1 && nums[j] == nums[j-1]){
-                    continue;
+                if(val2idx.count(-nums[i]-nums[j]) && val2idx[-nums[i]-nums[j]] > j){
+                    ans.push_back({nums[i], nums[j], -nums[i]-nums[j]});
                 }
-                if(binary_search(nums.begin()+j+1, nums.end(), -1*(nums[i] + nums[j]))){
-                    ans.push_back({nums[i], nums[j], -1*(nums[i] + nums[j])});
-                }
+                j = val2idx[nums[j]];
             }
+            i = val2idx[nums[i]];
         }
         return ans;
     }
