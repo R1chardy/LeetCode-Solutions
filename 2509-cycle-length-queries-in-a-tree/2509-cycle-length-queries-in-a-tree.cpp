@@ -10,7 +10,6 @@ public:
                 path2.pop_back();
             }
             ans.push_back(path1.size() + path2.size() + 1);
-            
         }
         return ans;
     }
