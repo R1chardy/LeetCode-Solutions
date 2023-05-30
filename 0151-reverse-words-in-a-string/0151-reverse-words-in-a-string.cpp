@@ -7,10 +7,9 @@ public:
         while(ss >> n){
             ans.push_back(n);
         }
-        reverse(ans.begin(), ans.end());
         string ret;
-        for(int i = 0; i < ans.size(); i++){
-            if(i != 0){
+        for(int i = ans.size()-1; i >= 0; i--){
+            if(i != ans.size()-1){
                 ret = ret + " ";
             }
             ret = ret + ans[i];
