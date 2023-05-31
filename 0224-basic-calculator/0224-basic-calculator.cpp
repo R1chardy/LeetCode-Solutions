@@ -23,11 +23,8 @@ public:
             }
             else if(c == ')'){
                 int in = ans;
-                auto [osign,onum,oans] = st.top();
+                tie(sign,num,ans) = st.top();
                 st.pop();
-                sign = osign;
-                num = onum;
-                ans = oans;
                 ans += in*sign;
             }
         }
