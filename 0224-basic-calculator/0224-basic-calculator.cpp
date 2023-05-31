@@ -1,8 +1,8 @@
 class Solution {
 public:
     int calculate(string s) {
-        uint sign = 1, num = 0, ans = 0;
-        stack<tuple<uint,uint,uint>> st;
+        long sign = 1, num = 0, ans = 0;
+        stack<tuple<long,long,long>> st;
         for(char c : s){
             if(isdigit(c)){
                 num = num*10 + c-'0';
@@ -23,8 +23,11 @@ public:
             }
             else if(c == ')'){
                 int in = ans;
-                tie(sign,num,ans) = st.top();
+                auto [osign,onum,oans] = st.top();
                 st.pop();
+                sign = osign;
+                num = onum;
+                ans = oans;
                 ans += in*sign;
             }
         }
