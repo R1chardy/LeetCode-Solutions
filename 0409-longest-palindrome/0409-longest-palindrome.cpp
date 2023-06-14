@@ -1,24 +1,20 @@
 class Solution {
 public:
     int longestPalindrome(string s) {
-        unordered_map<char, int> chars;
-        for(auto x : s){
-            chars[x]++;
+        unordered_map<char,int> mp;
+        for(auto& c : s){
+            mp[c]++;
         }
-        int sum = 0;
-        bool hasOdd = false;
-        for(auto x : chars){
-            if(x.second % 2 == 1){
-                hasOdd = true;
-                sum += x.second-1;
+        int sum = 0, mid = 0;
+        for(auto& pair : mp){
+            if(pair.second%2){
+                mid = 1;
+                sum += pair.second-1;
             }
             else{
-                sum += x.second;
+                sum += pair.second;
             }
         }
-        if(hasOdd){
-            sum += 1;
-        }
-        return sum;
+        return sum + mid;
     }
 };
