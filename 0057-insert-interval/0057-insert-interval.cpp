@@ -1,34 +1,36 @@
 class Solution {
 public:
     vector<vector<int>> insert(vector<vector<int>>& intervals, vector<int>& newInterval) {
-        vector<vector<int>> newI;
-        int first = newInterval[0], last = newInterval[1];
-        for(int i = 0; i < intervals.size(); i++){
-            if(intervals[i][1] < newInterval[0]){
-                newI.push_back(intervals[i]);
+        vector<vector<int>> ans;
+        int leftb = INT_MAX, rightb = -1;
+        bool pushed = false;
+        for(auto& intv : intervals){
+            if(intv[1] < newInterval[0] || intv[0] > newInterval[1]){
+                if(!pushed && leftb != INT_MAX && rightb != -1){
+                    ans.push_back({leftb, rightb});
+                    pushed = true;
+                    leftb = INT_MAX;
+                    rightb = -1;
+                }
+                else if(!pushed && intv[0] > newInterval[1]){
+                    ans.push_back(newInterval);
+                    pushed = true;
+                }
+                ans.push_back(intv);
             }
             else{
-                first = min(intervals[i][0], newInterval[0]);
-                int j = 0;
-                for(j = i; j < intervals.size(); j++){
-                    if(intervals[j][0] > newInterval[1]){
-                        last = newInterval[1];
-                        break;
-                    }
-                    else if(intervals[j][1] > newInterval[1]){
-                        last = intervals[j][1];
-                        j++;
-                        break;
-                    }
-                }
-                for(j; j < intervals.size(); j++){
-                    newI.push_back(intervals[j]);
-                }
-                break;
+                leftb = min(leftb, min(intv[0], newInterval[0]));
+                rightb = max(rightb, max(intv[1], newInterval[1]));
             }
         }
-        newI.push_back({first, last});
-        sort(newI.begin(), newI.end());
-        return newI;
+        if(!pushed){
+            if(leftb == INT_MAX && rightb == -1){
+                ans.push_back(newInterval);
+            }
+            else{
+                ans.push_back({leftb, rightb});
+            }
+        }
+        return ans;
     }
 };
