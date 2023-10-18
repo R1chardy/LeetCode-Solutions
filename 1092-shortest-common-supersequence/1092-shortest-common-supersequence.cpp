@@ -34,7 +34,7 @@ public:
         return ans;
     }
     
-    int helper(string str1, string str2, int i, int j){
+    int helper(string& str1, string& str2, int i, int j){
         if(i >= str1.length() && j >= str2.length()){
             return dp[i][j] = 0;
         }
